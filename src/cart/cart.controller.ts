@@ -26,7 +26,7 @@ export class CartController {
   ) {}
 
   // @UseGuards(JwtAuthGuard)
-  @UseGuards(BasicAuthGuard)
+  //@UseGuards(BasicAuthGuard)
   @Get()
   findUserCart(@Req() req: AppRequest): CartItem[] {
     const cart = this.cartService.findOrCreateByUserId(
@@ -37,7 +37,7 @@ export class CartController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  @UseGuards(BasicAuthGuard)
+  //@UseGuards(BasicAuthGuard)
   @Put()
   updateUserCart(
     @Req() req: AppRequest,
@@ -53,7 +53,7 @@ export class CartController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  @UseGuards(BasicAuthGuard)
+  //@UseGuards(BasicAuthGuard)
   @Delete()
   @HttpCode(HttpStatus.OK)
   clearUserCart(@Req() req: AppRequest) {
@@ -61,7 +61,7 @@ export class CartController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  @UseGuards(BasicAuthGuard)
+  //@UseGuards(BasicAuthGuard)
   @Put('order')
   checkout(@Req() req: AppRequest, @Body() body: CreateOrderDto) {
     const userId = getUserIdFromRequest(req);
@@ -90,7 +90,7 @@ export class CartController {
     };
   }
 
-  @UseGuards(BasicAuthGuard)
+  //@UseGuards(BasicAuthGuard)
   @Get('order')
   getOrder(): Order[] {
     return this.orderService.getAll();
