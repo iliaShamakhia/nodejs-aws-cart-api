@@ -68,18 +68,24 @@ export class CartService {
     /* const index = userCart.items.findIndex(
       ({ product }) => product.id === payload.product.id,
     ); */
-
+    let productId = payload.product.id? payload.product.id : payload.product.product_id;
     if (payload.count === 0) {
-      await this.entityManager.delete(CartItemsEntity, { product_id: payload.product.id });
+      await this.entityManager.delete(CartItemsEntity, { product_id: productId });
     } else {
-      await this.entityManager.save(CartItemsEntity, {
-        cart_id: userCart.id,
-        product_id: payload.product.id ? payload.product.id : payload.product.product_id,
-        count: payload.count,
-        title: payload.product.title,
-        description: payload.product.description,
-        price: payload.product.price
-      });
+      let item = await this.entityManager.findOneBy(CartItemsEntity, { product_id: productId });
+      if(item){
+        item.count = payload.count;
+        await this.entityManager.save(CartItemsEntity, item);
+      }else{
+        await this.entityManager.save(CartItemsEntity, {
+          cart_id: userCart.id,
+          product_id: productId,
+          count: payload.count,
+          title: payload.product.title,
+          description: payload.product.description,
+          price: payload.product.price
+        });
+      }
     }
 
     return userCart;
