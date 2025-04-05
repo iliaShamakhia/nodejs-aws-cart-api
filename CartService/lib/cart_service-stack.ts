@@ -4,6 +4,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambda_nodejs from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as dotenv from 'dotenv';
 import { Cors, LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import * as iam from 'aws-cdk-lib/aws-iam';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ export class CartServiceStack extends cdk.Stack {
     const nodejsFunctionProps = {
       runtime: lambda.Runtime.NODEJS_18_X,
       timeout: cdk.Duration.seconds(100),
+      memorySize: 1024,
       environment: {
         DATABASE_NAME: process.env.DATABASE_NAME || '',
         DATABASE_HOST: process.env.DATABASE_HOST || '',
@@ -28,6 +30,14 @@ export class CartServiceStack extends cdk.Stack {
       handler: 'handler',
       ...nodejsFunctionProps
     });
+
+    cartServiceLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ['rds-db:connect', 'rds:DescribeDBInstances'],
+        resources: ['*'], // You might want to restrict this to specific RDS ARN
+      }),
+    );
 
     const restApi = new RestApi(this, 'cartRestAPI', {
       restApiName: 'cartRestAPI',

@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 
-import helmet from 'helmet';
+//import helmet from 'helmet';
 
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
+//import { ConfigService } from '@nestjs/config';
 import serverlessExpress from '@codegenie/serverless-express';
 import { Callback, Context, Handler } from 'aws-lambda';
 
@@ -15,11 +15,10 @@ async function bootstrap() {
   /* const configService = app.get(ConfigService);
 
   const port = configService.get('APP_PORT') || 4000; */
-
   app.enableCors({
-    origin: (req, callback) => callback(null, true),
+    origin: true,
   });
-  app.use(helmet());
+  //app.use(helmet());
   await app.init();
 
   const expressApp = app.getHttpAdapter().getInstance();
