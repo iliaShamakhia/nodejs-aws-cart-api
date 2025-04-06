@@ -89,13 +89,10 @@ export class OrderService {
   }
 
   async removeById(id: string) {
-    await this.entityManager.transaction( async (entityManager) => {
-      let order = await entityManager.findOneBy(OrdersEntity, { id });
+    let order = await this.entityManager.findOneBy(OrdersEntity, { id });
 
-      if(order){
-        await entityManager.delete(Carts, { id: order.cart_id });
-        await entityManager.delete(OrdersEntity, { id });
-      }
-    })
+    if(order){
+      await this.entityManager.delete(OrdersEntity, { id });
+    }
   }
 }
