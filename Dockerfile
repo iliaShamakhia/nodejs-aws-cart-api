@@ -23,12 +23,6 @@ RUN npm install --omit=dev
 
 RUN rm package*.json
 
-ENV DATABASE_HOST=ilia-shamakhia-cart.cxsgm6kwmya1.eu-north-1.rds.amazonaws.com
-ENV DATABASE_PORT=5432
-ENV DATABASE_USERNAME=postgres
-ENV DATABASE_PASSWORD=Postgres158$
-ENV DATABASE_NAME=iliaShamakhiaCart
-
-EXPOSE 4000
+EXPOSE 8080
 
 CMD ["node", "dist/main.js"]
