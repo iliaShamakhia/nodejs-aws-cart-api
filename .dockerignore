@@ -1,0 +1,26 @@
+# ignore git repo files
+.git
+
+# ignore cart service since i no longer use it
+CartService
+
+# ignore build files
+dist
+
+# ignore node modules
+node_modules
+
+# ignore test files
+test
+
+# ignore dev env related and misc files 
+.dockerignore
+.env
+.eslintrc.js
+.gitignore
+.prettierrc
+dbFillScript.sql
+Dockerfile
+README.md
+
+
